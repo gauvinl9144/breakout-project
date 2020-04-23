@@ -41,13 +41,13 @@ public class Breakout extends Application {
 	public void start(Stage window) throws Exception {
 		this.window= window;
 		Font font = new Font("Comic Sans MS", 50);
-		Text text = new Text("Click start to begin!");
+		Text text = new Text("Breakout");
 		text.setFont(font);
-		text.setFill(Color.WHITE);
+		text.setFill(Color.BLACK);
 		
 		Button start = new Button("Start");
 		start.setFont(font);
-		start.setPrefWidth(150);
+		start.setPrefWidth(250);
 		start.setPrefHeight(70);
 		start.setTooltip(new Tooltip("Starts the game!"));
 		//start.setOnAction(this::processStartRetry);
@@ -55,6 +55,7 @@ public class Breakout extends Application {
 		VBox startPane = new VBox(text, start);
 		startPane.setAlignment(Pos.CENTER);
 		startPane.setSpacing(50);
+		startPane.setStyle("-fx-background-color: Red");
 		
 		startScene = new Scene(startPane, 500,500, Color.BLUE);
 		window.setScene(startScene);
