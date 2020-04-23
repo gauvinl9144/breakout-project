@@ -6,8 +6,10 @@ package application;
 import java.util.Random;
 
 import javafx.application.Application;
+
 import javafx.event.Event;
 import javafx.geometry.Insets;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -43,7 +45,7 @@ public class Breakout extends Application {
 	
 	@Override
 	public void start(Stage window) throws Exception {
-		this.window= window;
+		this.window = window;
 		Font font = new Font("Comic Sans MS", 50);
 		Text text = new Text("Breakout");
 		text.setFont(font);
@@ -110,6 +112,51 @@ public class Breakout extends Application {
 		window.setScene(inGameScene);
 		window.setX(125);
 		window.setY(50);
+	}
+	
+	public void processEndOfGame(ObservableValue<? extends Number> property, Object oldValue, Object newValue)
+	{
+		
+		
+		Button retryTrue = new Button("Yes");
+		Font comicSans = new Font("Comic Sans MS", 50);
+		retryTrue.setTextFill(Color.BLACK);
+		retryTrue.setFont(comicSans);
+		Button retryFalse = new Button("No");
+		retryFalse.setTextFill(Color.BLACK);
+		retryFalse.setFont(comicSans);
+		
+		Text endScore1 = new Text("Total Score:");
+		endScore1.setFont(comicSans);
+		endScore1.setFill(Color.WHITE);
+		
+		Text endScore2 = new Text(Integer.toString(score));
+		endScore2.setFont(comicSans);
+		endScore2.setFill(Color.WHITE);
+		
+		Text endScore3 = new Text("Play Again");
+		endScore3.setFont(comicSans);
+		endScore3.setFill(Color.WHITE);
+		
+		Text thankYou = new Text("Thanks for playing!");
+		thankYou.setFont(comicSans);
+		thankYou.setFill(Color.WHITE);
+		
+		HBox retry = new HBox(retryTrue, retryFalse);
+		retry.setAlignment(Pos.CENTER);
+		retry.setSpacing(40);
+		
+		VBox root = new VBox(endScore1, endScore2, endScore3, retry, thankYou);
+		root.setAlignment(Pos.CENTER);
+		root.setStyle("-fx-background-color: Blue");
+		
+		Scene endGameScene = new Scene(root, 500, 500, Color.BLUE);
+		
+		window.setScene(endGameScene);
+		
+		
+		
+		
 	}
 
 	/**
