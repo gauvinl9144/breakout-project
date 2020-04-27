@@ -5,16 +5,9 @@ package application;
 
 import java.util.Random;
 
-
-
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Application;
 
 import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.event.ActionEvent;
-import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
@@ -30,17 +23,14 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 /**
  * @author Nicholas Raffel
@@ -57,13 +47,14 @@ public class Breakout extends Application {
 	private int ballCount;
 	private int blockCount;
 	private Random randomizer;
-	private Group panes;
 	
+
 	private Circle ball;
 	private Image bar;
 	private ImageView imview;
 	private Timeline loop;
 	private FlowPane game;
+
 	
 	@Override
 	public void start(Stage window) throws Exception {
@@ -106,8 +97,6 @@ public class Breakout extends Application {
 	{
 		initializeInGameScene();
 		inGameScene.setOnKeyPressed(this::processBarMovement);
-		loop.setCycleCount(Timeline.INDEFINITE);
-		loop.play();
 	}
 	
 	//Creates the game screen
@@ -148,16 +137,15 @@ public class Breakout extends Application {
 		VBox right = new VBox(rightPane);
 		
 		initializeBar();
-		panes = new Group(top,left,right,game,imview);
-		initializeBall();
 		
-		
+		Group panes = new Group(top,left,right,game,imview);
 		inGameScene = new Scene(panes,1650,950,Color.BLACK);
 		inGameScene.getWindow();
 		window.setScene(inGameScene);
 		window.setX(125);
 		window.setY(50);
 	}
+
 	public void initializeBall()
 	{
 		Pane ballPane = new Pane();
@@ -191,7 +179,7 @@ public class Breakout extends Application {
         }));
 		
 	}
-	
+
 	//Creates the bar
 	public void initializeBar()
 	{
