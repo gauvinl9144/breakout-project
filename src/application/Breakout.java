@@ -123,7 +123,6 @@ public class Breakout extends Application {
 		imview.setViewport(new Rectangle2D(0,0,275,25));
 		imview.setX(690);
 		imview.setY(825);
-		imview.setOnKeyPressed(this::processBarMovement);
 		
 		Group panes = new Group(top,left,right,game,imview);
 		inGameScene = new Scene(panes,1650,950,Color.BLACK);
@@ -131,6 +130,7 @@ public class Breakout extends Application {
 		window.setScene(inGameScene);
 		window.setX(125);
 		window.setY(50);
+		inGameScene.setOnKeyPressed(this::processBarMovement);
 	}
 	
 	/**
@@ -141,11 +141,22 @@ public class Breakout extends Application {
 	public void processBarMovement(KeyEvent e)
 	{
 		
-		if((e.getCode() == KeyCode.ENTER))
+		if((e.getCode() == KeyCode.A) || (e.getCode() == KeyCode.LEFT))
 		{
 			try
 			{
-				System.out.println("Move left");
+				imview.setX(imview.getX() -10);
+			}
+			catch(Exception ex)
+			{
+				System.out.println("Couldnt process scene change");
+			}
+		}
+		if((e.getCode() == KeyCode.D) || (e.getCode() == KeyCode.RIGHT))
+		{
+			try
+			{
+				imview.setX(imview.getX() + 10);
 			}
 			catch(Exception ex)
 			{
