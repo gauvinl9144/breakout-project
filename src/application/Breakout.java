@@ -11,10 +11,15 @@ import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
@@ -43,13 +48,20 @@ public class Breakout extends Application {
 	private int blockCount;
 	private Random randomizer;
 	
+	private Image bar;
+	private ImageView imview;
+	
 	@Override
 	public void start(Stage window) throws Exception {
 		this.window = window;
 		Font font = new Font("Comic Sans MS", 50);
+		Font font2 = new Font("Comic Sans MS", 20);
 		Text text = new Text("Breakout");
+		Text text2 = new Text("Use Left/Right Arrow keys or A/D to move");
 		text.setFont(font);
 		text.setFill(Color.BLACK);
+		text2.setFont(font2);
+		text2.setFill(Color.BLACK);
 		
 		Button start = new Button("Start");
 		start.setFont(font);
@@ -58,7 +70,7 @@ public class Breakout extends Application {
 		start.setTooltip(new Tooltip("Starts the game!"));
 		start.setOnAction(this::processStartRetry);
 		
-		VBox startPane = new VBox(text, start);
+		VBox startPane = new VBox(text, text2, start);
 		startPane.setAlignment(Pos.CENTER);
 		startPane.setSpacing(50);
 		startPane.setStyle("-fx-background-color: Red");
@@ -106,12 +118,40 @@ public class Breakout extends Application {
 		rightPane.setTranslateX(1500);
 		VBox right = new VBox(rightPane);
 		
-		Group panes = new Group(top,left,right,game);
+		bar = new Image("red.png");
+		imview = new ImageView(bar);
+		imview.setViewport(new Rectangle2D(0,0,275,25));
+		imview.setX(690);
+		imview.setY(825);
+		imview.setOnKeyPressed(this::processBarMovement);
+		
+		Group panes = new Group(top,left,right,game,imview);
 		inGameScene = new Scene(panes,1650,950,Color.BLACK);
 		inGameScene.getWindow();
 		window.setScene(inGameScene);
 		window.setX(125);
 		window.setY(50);
+	}
+	
+	/**
+	 * @author RaffelNicholas
+	 * This is the start of the Bar movement
+	 * @param e
+	 */
+	public void processBarMovement(KeyEvent e)
+	{
+		
+		if((e.getCode() == KeyCode.ENTER))
+		{
+			try
+			{
+				System.out.println("Move left");
+			}
+			catch(Exception ex)
+			{
+				System.out.println("Couldnt process scene change");
+			}
+		}
 	}
 	
 	public void processEndOfGame(ObservableValue<? extends Number> property, Object oldValue, Object newValue)
