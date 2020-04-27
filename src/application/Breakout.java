@@ -33,8 +33,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
- * @author RaffelNicholas
- * @author GauvinLuke
+ * @author Nicholas Raffel
+ * @author Luke Gauvin
  */
 public class Breakout extends Application {
 
@@ -58,6 +58,7 @@ public class Breakout extends Application {
 		window.show();
 	}
 	
+	//Creates the Start screen and sets the scene
 	public void initializeStartScreen()
 	{
 		Font font = new Font("Comic Sans MS", 50);
@@ -86,12 +87,14 @@ public class Breakout extends Application {
 		window.setTitle("Breakout!");
 	}
 	
+	//Will add more sooner or later
 	public void processStartRetry(Event e)
 	{
 		initializeInGameScene();
 		inGameScene.setOnKeyPressed(this::processBarMovement);
 	}
 	
+	//Creates the game screen
 	public void initializeInGameScene()
 	{
 		Font scoreFont = Font.font("Comic Sans MS",FontWeight.BOLD,35);
@@ -137,6 +140,7 @@ public class Breakout extends Application {
 		window.setX(125);
 		window.setY(50);
 	}
+	//Creates the bar
 	public void initializeBar()
 	{
 		bar = new Image("red.png");
@@ -147,36 +151,49 @@ public class Breakout extends Application {
 	}
 	/**
 	 * @author RaffelNicholas
-	 * This is the start of the Bar movement
+	 * Bar Movement Function,
 	 * @param e
 	 */
 	public void processBarMovement(KeyEvent e)
 	{
-		
+		//Controls to move the bar left
 		if((e.getCode() == KeyCode.A) || (e.getCode() == KeyCode.LEFT))
 		{
 			try
 			{
-				imview.setX(imview.getX() -10);
+				imview.setX(imview.getX() - 15);
 			}
 			catch(Exception ex)
 			{
 				System.out.println("Couldnt process scene change");
 			}
 		}
+		//Controls to move the bar right
 		if((e.getCode() == KeyCode.D) || (e.getCode() == KeyCode.RIGHT))
 		{
 			try
 			{
-				imview.setX(imview.getX() + 10);
+				imview.setX(imview.getX() + 15);
 			}
 			catch(Exception ex)
 			{
 				System.out.println("Couldnt process scene change");
 			}
 		}
+		
+		//boundaries for the bars movement 
+		if(imview.getX() < 150)
+		{
+			imview.setX(150);
+		}
+		else if(imview.getX() > 1275)
+		{
+			imview.setX(1275);
+		}
+		
 	}
 	
+	//Creates the end of game screen
 	public void processEndOfGame(ObservableValue<? extends Number> property, Object oldValue, Object newValue)
 	{
 		
