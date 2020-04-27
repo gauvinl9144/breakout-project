@@ -60,11 +60,10 @@ public class Breakout extends Application {
 	private Group panes;
 	
 	private Circle ball;
-	private int horizontalSpeed;
-	private int verticalSpeed;
 	private Image bar;
 	private ImageView imview;
 	private Timeline loop;
+	private FlowPane game;
 	
 	@Override
 	public void start(Stage window) throws Exception {
@@ -116,7 +115,7 @@ public class Breakout extends Application {
 	{
 		Font scoreFont = Font.font("Comic Sans MS",FontWeight.BOLD,35);
 		
-		FlowPane game = new FlowPane();
+		game = new FlowPane();
 		game.setAlignment(Pos.CENTER);
 		game.setStyle("-fx-background-color: Black");
 		
@@ -170,25 +169,23 @@ public class Breakout extends Application {
 		
 		loop = new Timeline(new KeyFrame(Duration.millis(10), new EventHandler<ActionEvent>() {
 
-            double deltaX = 3;
-            double deltaY = 3;
+            int horizontalSpeed = 3;
+            int verticalSpeed = 3;
 
             @Override
             public void handle(final ActionEvent t) {
-                ball.setLayoutX(ball.getLayoutX() + deltaX);
-                ball.setLayoutY(ball.getLayoutY() + deltaY);
+                ball.setLayoutX(ball.getLayoutX() + horizontalSpeed);
+                ball.setLayoutY(ball.getLayoutY() + verticalSpeed);
 
-                final Bounds bounds = ballPane.getBoundsInLocal();
-                final boolean atRightBorder = ball.getLayoutX() >= (bounds.getMaxX() - ball.getRadius());
-                final boolean atLeftBorder = ball.getLayoutX() <= (bounds.getMinX() + ball.getRadius());
-                final boolean atBottomBorder = ball.getLayoutY() >= (bounds.getMaxY() - ball.getRadius());
-                final boolean atTopBorder = ball.getLayoutY() <= (bounds.getMinY() + ball.getRadius());
+                boolean atRightBorder = ball.getLayoutX() >= (game.getMaxWidth() - ball.getRadius());
+                boolean atLeftBorder = ball.getLayoutX() <= (game.getMinWidth() + ball.getRadius());
+                boolean atTopBorder = ball.getLayoutY() <= (game.getMinHeight() + ball.getRadius());
 
                 if (atRightBorder || atLeftBorder) {
-                    deltaX *= -1;
+                    horizontalSpeed *= -1;
                 }
-                if (atBottomBorder || atTopBorder) {
-                    deltaY *= -1;
+                if (atTopBorder) {
+                    verticalSpeed *= -1;
                 }
             }
         }));
