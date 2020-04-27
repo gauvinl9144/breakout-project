@@ -101,7 +101,7 @@ public class Breakout extends Application {
 		window.setTitle("Breakout!");
 	}
 	
-	//Will add more sooner or later
+	//Will add more sooner or later hopefully soon
 	public void processStartRetry(Event e)
 	{
 		initializeInGameScene();
