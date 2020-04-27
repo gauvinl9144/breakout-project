@@ -34,7 +34,7 @@ import javafx.stage.Stage;
 
 /**
  * @author RaffelNicholas
- *
+ * @author GauvinLuke
  */
 public class Breakout extends Application {
 
@@ -54,6 +54,12 @@ public class Breakout extends Application {
 	@Override
 	public void start(Stage window) throws Exception {
 		this.window = window;
+		initializeStartScreen();
+		window.show();
+	}
+	
+	public void initializeStartScreen()
+	{
 		Font font = new Font("Comic Sans MS", 50);
 		Font font2 = new Font("Comic Sans MS", 20);
 		Text text = new Text("Breakout");
@@ -78,12 +84,16 @@ public class Breakout extends Application {
 		startScene = new Scene(startPane, 500,500, Color.BLUE);
 		window.setScene(startScene);
 		window.setTitle("Breakout!");
-		window.show();
 	}
 	
 	public void processStartRetry(Event e)
 	{
-		
+		initializeInGameScene();
+		inGameScene.setOnKeyPressed(this::processBarMovement);
+	}
+	
+	public void initializeInGameScene()
+	{
 		Font scoreFont = Font.font("Comic Sans MS",FontWeight.BOLD,35);
 		
 		FlowPane game = new FlowPane();
@@ -118,11 +128,7 @@ public class Breakout extends Application {
 		rightPane.setTranslateX(1500);
 		VBox right = new VBox(rightPane);
 		
-		bar = new Image("red.png");
-		imview = new ImageView(bar);
-		imview.setViewport(new Rectangle2D(0,0,275,25));
-		imview.setX(690);
-		imview.setY(825);
+		initializeBar();
 		
 		Group panes = new Group(top,left,right,game,imview);
 		inGameScene = new Scene(panes,1650,950,Color.BLACK);
@@ -130,9 +136,15 @@ public class Breakout extends Application {
 		window.setScene(inGameScene);
 		window.setX(125);
 		window.setY(50);
-		inGameScene.setOnKeyPressed(this::processBarMovement);
 	}
-	
+	public void initializeBar()
+	{
+		bar = new Image("red.png");
+		imview = new ImageView(bar);
+		imview.setViewport(new Rectangle2D(0,0,275,25));
+		imview.setX(690);
+		imview.setY(825);
+	}
 	/**
 	 * @author RaffelNicholas
 	 * This is the start of the Bar movement
