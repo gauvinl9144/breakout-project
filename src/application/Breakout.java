@@ -5,9 +5,16 @@ package application;
 
 import java.util.Random;
 
+
+
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 
 import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.event.ActionEvent;
+import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
@@ -23,14 +30,17 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 /**
  * @author Nicholas Raffel
@@ -47,14 +57,13 @@ public class Breakout extends Application {
 	private int ballCount;
 	private int blockCount;
 	private Random randomizer;
+	private Group panes;
 	
-
 	private Circle ball;
 	private Image bar;
 	private ImageView imview;
 	private Timeline loop;
 	private FlowPane game;
-
 	
 	@Override
 	public void start(Stage window) throws Exception {
@@ -97,6 +106,8 @@ public class Breakout extends Application {
 	{
 		initializeInGameScene();
 		inGameScene.setOnKeyPressed(this::processBarMovement);
+		loop.setCycleCount(Timeline.INDEFINITE);
+		loop.play();
 	}
 	
 	//Creates the game screen
@@ -137,49 +148,61 @@ public class Breakout extends Application {
 		VBox right = new VBox(rightPane);
 		
 		initializeBar();
+		panes = new Group(top,left,right,game,imview);
+		initializeBall();
 		
-		Group panes = new Group(top,left,right,game,imview);
+		
 		inGameScene = new Scene(panes,1650,950,Color.BLACK);
 		inGameScene.getWindow();
 		window.setScene(inGameScene);
 		window.setX(125);
 		window.setY(50);
 	}
-
 	public void initializeBall()
 	{
 		Pane ballPane = new Pane();
 		ball = new Circle(15, Color.WHITE);
-		ball.relocate(690, 850);
+		ball.relocate(785, 795);
 		ballPane.getChildren().addAll(ball);
 		
 		panes.getChildren().addAll(ballPane);
 		
 		loop = new Timeline(new KeyFrame(Duration.millis(10), new EventHandler<ActionEvent>() {
 
-            int horizontalSpeed = 3;
-            int verticalSpeed = 3;
+            int horizontalSpeed = 2;
+            int verticalSpeed = -2;
 
             @Override
             public void handle(final ActionEvent t) {
                 ball.setLayoutX(ball.getLayoutX() + horizontalSpeed);
                 ball.setLayoutY(ball.getLayoutY() + verticalSpeed);
+                
+                final Bounds bounds = game.getBoundsInLocal();
 
-                boolean atRightBorder = ball.getLayoutX() >= (game.getMaxWidth() - ball.getRadius());
-                boolean atLeftBorder = ball.getLayoutX() <= (game.getMinWidth() + ball.getRadius());
-                boolean atTopBorder = ball.getLayoutY() <= (game.getMinHeight() + ball.getRadius());
-
+                boolean atRightBorder = ball.getLayoutX() >= 1485;
+                boolean atLeftBorder = ball.getLayoutX() <= 160;
+                boolean atTopBorder = ball.getLayoutY() <= 164;
+                boolean atBottomBorder = ball.getLayoutY() == 1000;
+             
+                if(atBottomBorder)
+                {
+                	System.out.println("Lost a Life");
+                	ball.relocate(785, 775);
+                	verticalSpeed *= -1;
+                	imview.setX(690);
+                }
                 if (atRightBorder || atLeftBorder) {
                     horizontalSpeed *= -1;
                 }
                 if (atTopBorder) {
                     verticalSpeed *= -1;
                 }
+      
             }
         }));
-		
-	}
 
+	}
+	
 	//Creates the bar
 	public void initializeBar()
 	{
