@@ -160,6 +160,7 @@ public class Breakout extends Application {
 		window.setX(125);
 		window.setY(50);
 	}
+	//creates the ball and ball movement
 	public void initializeBall()
 	{
 		Pane ballPane = new Pane();
