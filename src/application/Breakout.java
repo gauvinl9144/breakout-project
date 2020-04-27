@@ -20,6 +20,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
@@ -58,6 +59,7 @@ public class Breakout extends Application {
 	private int blockCount;
 	private Random randomizer;
 	private Group panes;
+	private int barWidth;
 	
 	private Circle ball;
 	private Image bar;
@@ -162,29 +164,34 @@ public class Breakout extends Application {
 	{
 		Pane ballPane = new Pane();
 		ball = new Circle(15, Color.WHITE);
-		ball.relocate(690, 850);
+		ball.relocate(785, 790);
 		ballPane.getChildren().addAll(ball);
 		
 		panes.getChildren().addAll(ballPane);
 		
 		loop = new Timeline(new KeyFrame(Duration.millis(10), new EventHandler<ActionEvent>() {
 
-            int horizontalSpeed = 3;
-            int verticalSpeed = 3;
+            int horizontalSpeed = 2;
+            int verticalSpeed = -2;
 
             @Override
             public void handle(final ActionEvent t) {
                 ball.setLayoutX(ball.getLayoutX() + horizontalSpeed);
                 ball.setLayoutY(ball.getLayoutY() + verticalSpeed);
+                
+                final Bounds barBounds = imview.getBoundsInLocal();
 
-                boolean atRightBorder = ball.getLayoutX() >= (game.getMaxWidth() - ball.getRadius());
-                boolean atLeftBorder = ball.getLayoutX() <= (game.getMinWidth() + ball.getRadius());
-                boolean atTopBorder = ball.getLayoutY() <= (game.getMinHeight() + ball.getRadius());
+                boolean atRightBorder = ball.getLayoutX() >= 1485;
+                boolean atLeftBorder = ball.getLayoutX() <= 160;
+                boolean atTopBorder = ball.getLayoutY() <= 164;
+                boolean atBar = false;
+                if(new Rectangle(ball.getLayoutX(), ball.getLayoutY(), 20, 20).intersects(barBounds))
+                	atBar = true;
 
                 if (atRightBorder || atLeftBorder) {
                     horizontalSpeed *= -1;
                 }
-                if (atTopBorder) {
+                if (atTopBorder || atBar) {
                     verticalSpeed *= -1;
                 }
             }
@@ -195,9 +202,10 @@ public class Breakout extends Application {
 	//Creates the bar
 	public void initializeBar()
 	{
+		barWidth = 275;
 		bar = new Image("red.png");
 		imview = new ImageView(bar);
-		imview.setViewport(new Rectangle2D(0,0,275,25));
+		imview.setViewport(new Rectangle2D(0,0,barWidth,25));
 		imview.setX(690);
 		imview.setY(825);
 	}
