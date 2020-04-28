@@ -187,6 +187,8 @@ public class Breakout extends Application {
                 boolean atBottomBorder = ball.getLayoutY() >= 1000;
                 boolean atBar = new Rectangle(ball.getLayoutX(), ball.getLayoutY(), 20, 20).intersects(barBounds);
              
+                
+                
                 if(atBottomBorder)
                 {
                 	System.out.println("Lost a Life");
