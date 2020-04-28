@@ -58,11 +58,16 @@ public class Breakout extends Application {
 	private int blockCount;
 	private Group panes;
 	
+	private double horizontalSpeed;
+	private double verticalSpeed;
+	
 	private Circle ball;
 	private Image bar;
 	private ImageView imview;
 	private Timeline loop;
 	private FlowPane game;
+	
+	Button retryFalse;
 	
 	@Override
 	public void start(Stage window) throws Exception {
@@ -105,6 +110,10 @@ public class Breakout extends Application {
 	{
 		initializeInGameScene();
 		inGameScene.setOnKeyPressed(this::processBarMovement);
+		
+		horizontalSpeed = 1.5;
+        verticalSpeed = -1.5;
+		
 		loop.setCycleCount(Timeline.INDEFINITE);
 		loop.play();
 	}
@@ -170,9 +179,6 @@ public class Breakout extends Application {
 		panes.getChildren().addAll(ballPane);
 		
 		loop = new Timeline(new KeyFrame(Duration.millis(10), new EventHandler<ActionEvent>() {
-
-            double horizontalSpeed = 1.5;
-            double verticalSpeed = -1.5;
 
             @Override
             public void handle(final ActionEvent t) {
@@ -279,9 +285,13 @@ public class Breakout extends Application {
 		Font comicSans = new Font("Comic Sans MS", 50);
 		retryTrue.setTextFill(Color.BLACK);
 		retryTrue.setFont(comicSans);
-		Button retryFalse = new Button("No");
+		retryTrue.setOnAction(this::processStartRetry);
+		retryTrue.setTooltip(new Tooltip("Starts the game again!"));
+		retryFalse = new Button("No");
 		retryFalse.setTextFill(Color.BLACK);
 		retryFalse.setFont(comicSans);
+		retryFalse.setOnAction(this::processClose);
+		retryFalse.setTooltip(new Tooltip("Ends the game!"));
 		
 		Text endScore1 = new Text("Total Score:");
 		endScore1.setFont(comicSans);
@@ -311,6 +321,18 @@ public class Breakout extends Application {
 		
 		window.setScene(endGameScene);
 
+	}
+	//Process to end thing
+	public void processClose(Event e) 
+	{
+		if(retryFalse.isArmed())
+		{
+			try {
+				((Stage)(((Button)e.getSource()).getScene().getWindow())).close();
+			} catch (Exception e1) {
+				System.out.println("Ohno");
+			}
+		}
 	}
 
 	/**
