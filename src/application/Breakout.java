@@ -54,9 +54,8 @@ public class Breakout extends Application {
 	private Scene inGameScene;
 	private Scene endGameScene;
 	private int score;
-	private int ballCount = 3;
+	private int ballCount;
 	private int blockCount;
-	private Random randomizer;
 	private Group panes;
 	
 	private Circle ball;
@@ -113,6 +112,9 @@ public class Breakout extends Application {
 	//Creates the game screen
 	public void initializeInGameScene()
 	{
+		score = 0;
+		ballCount = 3;
+		
 		Font scoreFont = Font.font("Comic Sans MS",FontWeight.BOLD,35);
 		
 		game = new FlowPane();
@@ -169,8 +171,8 @@ public class Breakout extends Application {
 		
 		loop = new Timeline(new KeyFrame(Duration.millis(10), new EventHandler<ActionEvent>() {
 
-            int horizontalSpeed = 2;
-            int verticalSpeed = -2;
+            double horizontalSpeed = 1.5;
+            double verticalSpeed = -1.5;
 
             @Override
             public void handle(final ActionEvent t) {
@@ -189,7 +191,8 @@ public class Breakout extends Application {
                 {
                 	System.out.println("Lost a Life");
                 	ball.relocate(785, 790);
-                	verticalSpeed *= -1;
+                	horizontalSpeed = 1.5;
+                	verticalSpeed = 1.5;
                 	imview.setX(690);
                 	ballCount -= 1;
                 	
@@ -199,10 +202,12 @@ public class Breakout extends Application {
                 	}
                 }
                 if (atRightBorder || atLeftBorder) {
-                    horizontalSpeed *= -1;
+                    horizontalSpeed *= -1.02;
+                    verticalSpeed *= 1.02;
                 }
                 if (atTopBorder || atBar) {
-                    verticalSpeed *= -1;
+                    verticalSpeed *= -1.02;
+                    horizontalSpeed *= 1.02;
                 }
       
             }
