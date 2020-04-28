@@ -20,7 +20,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
@@ -55,11 +54,10 @@ public class Breakout extends Application {
 	private Scene inGameScene;
 	private Scene endGameScene;
 	private int score;
-	private int ballCount;
+	private int ballCount = 3;
 	private int blockCount;
 	private Random randomizer;
 	private Group panes;
-	private int barWidth;
 	
 	private Circle ball;
 	private Image bar;
@@ -103,7 +101,7 @@ public class Breakout extends Application {
 		window.setTitle("Breakout!");
 	}
 	
-	//Will add more sooner or later hopefully soon
+	//Will add more sooner or later
 	public void processStartRetry(Event e)
 	{
 		initializeInGameScene();
@@ -160,7 +158,6 @@ public class Breakout extends Application {
 		window.setX(125);
 		window.setY(50);
 	}
-	//creates the ball and ball movement
 	public void initializeBall()
 	{
 		Pane ballPane = new Pane();
@@ -185,28 +182,40 @@ public class Breakout extends Application {
                 boolean atRightBorder = ball.getLayoutX() >= 1485;
                 boolean atLeftBorder = ball.getLayoutX() <= 160;
                 boolean atTopBorder = ball.getLayoutY() <= 164;
-                boolean atBar = false;
-                if(new Rectangle(ball.getLayoutX(), ball.getLayoutY(), 20, 20).intersects(barBounds))
-                	atBar = true;
-
+                boolean atBottomBorder = ball.getLayoutY() >= 1000;
+                boolean atBar = new Rectangle(ball.getLayoutX(), ball.getLayoutY(), 20, 20).intersects(barBounds);
+             
+                if(atBottomBorder)
+                {
+                	System.out.println("Lost a Life");
+                	ball.relocate(785, 790);
+                	verticalSpeed *= -1;
+                	imview.setX(690);
+                	ballCount -= 1;
+                	
+                	if(ballCount == 0)
+                	{
+                		processEndOfGame();
+                	}
+                }
                 if (atRightBorder || atLeftBorder) {
                     horizontalSpeed *= -1;
                 }
                 if (atTopBorder || atBar) {
                     verticalSpeed *= -1;
                 }
+      
             }
         }));
-		
+
 	}
 	
 	//Creates the bar
 	public void initializeBar()
 	{
-		barWidth = 275;
 		bar = new Image("red.png");
 		imview = new ImageView(bar);
-		imview.setViewport(new Rectangle2D(0,0,barWidth,25));
+		imview.setViewport(new Rectangle2D(0,0,275,25));
 		imview.setX(690);
 		imview.setY(825);
 	}
@@ -255,7 +264,7 @@ public class Breakout extends Application {
 	}
 	
 	//Creates the end of game screen
-	public void processEndOfGame(ObservableValue<? extends Number> property, Object oldValue, Object newValue)
+	public void processEndOfGame()
 	{
 		
 		
@@ -294,10 +303,7 @@ public class Breakout extends Application {
 		Scene endGameScene = new Scene(root, 500, 500, Color.BLUE);
 		
 		window.setScene(endGameScene);
-		
-		
-		
-		
+
 	}
 
 	/**
