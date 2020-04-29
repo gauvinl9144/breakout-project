@@ -66,6 +66,8 @@ public class Breakout extends Application {
 	private ImageView imview;
 	private Timeline loop;
 	private FlowPane game;
+	private int blockStartX;
+	private int blockStartY;
 	
 	Button retryFalse;
 	
@@ -162,6 +164,22 @@ public class Breakout extends Application {
 		panes = new Group(top,left,right,game,imview);
 		initializeBall();
 		
+		//Creates the blocks
+		
+		Blocks[][] blockArray = new Blocks[5][8];
+		
+		for(int row =0; row < 5; row++)
+		{
+			blockStartX = 120;
+			blockStartY = 120 + (row * 50);
+			for(int col =0; col < 8; col++)
+			{
+				blockStartX += col*200;
+				Blocks block1 = new Blocks(4-row);
+				blockArray[row][col] = block1;
+				game.getChildren().addAll(blockArray[row][col].getRectangle());
+			}
+		}
 		
 		inGameScene = new Scene(panes,1650,950,Color.BLACK);
 		inGameScene.getWindow();
