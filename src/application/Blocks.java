@@ -26,7 +26,7 @@ public class Blocks {
 			this.block.setFill(Color.DARKRED);
 			this.block.setWidth(100);
 			this.block.setHeight(20);
-			this.blockLevel = inputLevel;
+			this.blockLevel = 4;
 		}
 		else if(inputLevel == 3)
 		{
@@ -34,7 +34,7 @@ public class Blocks {
 			this.block.setFill(Color.ORANGE);
 			this.block.setWidth(100);
 			this.block.setHeight(20);
-			this.blockLevel = inputLevel;
+			this.blockLevel = 3;
 		}
 		else if(inputLevel == 2)
 		{
@@ -42,7 +42,7 @@ public class Blocks {
 			this.block.setFill(Color.YELLOW);
 			this.block.setWidth(100);
 			this.block.setHeight(20);
-			this.blockLevel = inputLevel;
+			this.blockLevel = 2;
 		}
 		else if(inputLevel == 1)
 		{
@@ -50,7 +50,7 @@ public class Blocks {
 			this.block.setFill(Color.GREEN);
 			this.block.setWidth(100);
 			this.block.setHeight(20);
-			this.blockLevel = inputLevel;
+			this.blockLevel = 1;
 		}
 		else if(inputLevel == 0)
 		{
@@ -58,7 +58,7 @@ public class Blocks {
 			this.block.setFill(Color.BLUE);
 			this.block.setWidth(100);
 			this.block.setHeight(20);
-			this.blockLevel = inputLevel;
+			this.blockLevel = 0;
 		}
 		
 	}
@@ -68,27 +68,24 @@ public class Blocks {
 		if(this.blockLevel == 4)
 		{
 			this.block.setFill(Color.ORANGE);
-			this.blockLevel -= 1;
 		}
 		if(this.blockLevel == 3)
 		{
 			this.block.setFill(Color.YELLOW);
-			this.blockLevel -= 1;
 		}
 		if(this.blockLevel == 2)
 		{
 			this.block.setFill(Color.GREEN);
-			this.blockLevel -= 1;
 		}
 		if(this.blockLevel == 1)
 		{
 			this.block.setFill(Color.BLUE);
-			this.blockLevel -= 1;
 		}
-		if(this.blockLevel == 0)
-		{
-			this.blockLevel -= 1;
-		}
+		this.blockLevel -= 1;
+	}
+	protected int getBlockLevel()
+	{
+		return this.blockLevel;
 	}
 	
 	protected Rectangle getRectangle()

@@ -229,7 +229,13 @@ public class Breakout extends Application {
                         if(atBlock)
                         {
                         	blockArray[row][col].destroyBlock();
-                        	
+                        	verticalSpeed *= -1.02;
+                        	if(blockArray[row][col].getBlockLevel() < 0)
+                        	{
+                        		blockArray[row][col].getRectangle().setX(1000000);
+                        		blockArray[row][col].getRectangle().setY(1000000);
+
+                        	}
                             System.out.println("Block Destroyed");
                             break;
                         }
@@ -269,10 +275,7 @@ public class Breakout extends Application {
                     verticalSpeed *= -1.02;
                     horizontalSpeed *= 1.02;
                 }
-                if(atBlock)
-                {
-                	verticalSpeed *= -1.02;
-                }
+               
       
             }
         }));
