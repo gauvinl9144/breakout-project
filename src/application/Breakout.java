@@ -29,6 +29,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -65,7 +66,7 @@ public class Breakout extends Application {
 	private Image bar;
 	private ImageView imview;
 	private Timeline loop;
-	private FlowPane game;
+	private GridPane game;
 	private int blockStartX;
 	private int blockStartY;
 	
@@ -128,7 +129,7 @@ public class Breakout extends Application {
 		
 		Font scoreFont = Font.font("Comic Sans MS",FontWeight.BOLD,35);
 		
-		game = new FlowPane();
+		game = new GridPane();
 		game.setAlignment(Pos.CENTER);
 		game.setStyle("-fx-background-color: Black");
 		
@@ -178,6 +179,9 @@ public class Breakout extends Application {
 				Blocks block1 = new Blocks(4-row);
 				blockArray[row][col] = block1;
 				game.getChildren().addAll(blockArray[row][col].getRectangle());
+				game.setRowIndex(blockArray[row][col].getRectangle(), blockStartX);
+				game.setColumnIndex(blockArray[row][col].getRectangle(), blockStartY);
+
 			}
 		}
 		
