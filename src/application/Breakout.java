@@ -28,6 +28,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
@@ -59,7 +60,8 @@ public class Breakout extends Application {
 	private int score;
 	private int ballCount;
 	private int blockCount;
-	private Group panes;
+	private BorderPane fullGame;
+	private Group gamePane;
 	
 	private double horizontalSpeed;
 	private double verticalSpeed;
@@ -68,9 +70,9 @@ public class Breakout extends Application {
 	private Image bar;
 	private ImageView imview;
 	private Timeline loop;
-	private GridPane game;
-	private int blockStartX;
-	private int blockStartY;
+	private Pane game;
+	private Blocks[][] blockArray;
+	private Bounds[][] blockBounds;
 	
 	Button retryFalse;
 	
@@ -131,12 +133,8 @@ public class Breakout extends Application {
 		
 		Font scoreFont = Font.font("Comic Sans MS",FontWeight.BOLD,35);
 		
-		game = new GridPane();
-		game.setVgap(2);
-		game.setHgap(.5);
+		game = new Pane();
 		
-		//game.setGridLinesVisible(true);
-		game.setAlignment(Pos.CENTER);
 	
 		
 		Text scoreTxt = new Text(200,200,"Score: ");
@@ -168,30 +166,35 @@ public class Breakout extends Application {
 		VBox right = new VBox(rightPane);
 		
 		initializeBar();
-		panes = new Group(top,left,right,game,imview);
+		gamePane = new Group(top,left,right,game,imview);
 		initializeBall();
 		
 		//Creates the blocks
 		
-		Blocks[][] blockArray = new Blocks[5][8];
+		blockArray = new Blocks[5][8];
+		blockBounds = new Bounds[5][8];
+		double blockStartX = 300;
+		double blockStartY = 165;
 		
 		for(int row =0; row < 5; row++)
 		{
-			
+			blockStartY += 21;
 			for(int col =0; col < 8; col++)
 			{
+				blockStartX += 101;
 				Blocks block1 = new Blocks(4-row);
 				blockArray[row][col] = block1;
 				game.getChildren().addAll(blockArray[row][col].getRectangle());
-				game.getColumnConstraints().add(new ColumnConstraints(100));
-				game.getRowConstraints().add(new RowConstraints(50));
-				game.setRowIndex(blockArray[row][col].getRectangle(), row + 3);
-				game.setColumnIndex(blockArray[row][col].getRectangle(), col + 4);
+				blockArray[row][col].getRectangle().setX(blockStartX);
+				blockArray[row][col].getRectangle().setY(blockStartY);
+				blockBounds[row][col] = blockArray[row][col].getRectangle().getBoundsInLocal();
+				System.out.println(blockBounds[row][col]);
 
 			}
+			blockStartX = 300;
 		}
 		
-		inGameScene = new Scene(panes,1650,950,Color.BLACK);
+		inGameScene = new Scene(gamePane,1650,950,Color.BLACK);
 		inGameScene.getWindow();
 		window.setScene(inGameScene);
 		window.setX(125);
@@ -204,7 +207,7 @@ public class Breakout extends Application {
 		ball.relocate(785, 790);
 		ballPane.getChildren().addAll(ball);
 		
-		panes.getChildren().addAll(ballPane);
+		game.getChildren().addAll(ballPane);
 		
 		loop = new Timeline(new KeyFrame(Duration.millis(10), new EventHandler<ActionEvent>() {
 
@@ -214,7 +217,27 @@ public class Breakout extends Application {
                 ball.setLayoutY(ball.getLayoutY() + verticalSpeed);
                 
                 final Bounds barBounds = imview.getBoundsInLocal();
+                boolean atBlock = false;
 
+                for(int row =0; row < 5; row++)
+                {
+
+                    for(int col =0; col < 8; col++)
+                    {
+                        blockBounds[row][col] = blockArray[row][col].getRectangle().getBoundsInLocal();
+                        atBlock = new Rectangle(ball.getLayoutX() - 20, ball.getLayoutY() - 20, 20, 20).intersects(blockBounds[row][col]);
+                        if(atBlock)
+                        {
+                        	blockArray[row][col].destroyBlock();
+                        	
+                            System.out.println("Block Destroyed");
+                            break;
+                        }
+                    }
+                    if(atBlock)
+                        break;
+                }
+                
                 boolean atRightBorder = ball.getLayoutX() >= 1485;
                 boolean atLeftBorder = ball.getLayoutX() <= 160;
                 boolean atTopBorder = ball.getLayoutY() <= 164;
@@ -234,6 +257,7 @@ public class Breakout extends Application {
                 	
                 	if(ballCount == 0)
                 	{
+                		loop.stop();
                 		processEndOfGame();
                 	}
                 }
@@ -244,6 +268,10 @@ public class Breakout extends Application {
                 if (atTopBorder || atBar) {
                     verticalSpeed *= -1.02;
                     horizontalSpeed *= 1.02;
+                }
+                if(atBlock)
+                {
+                	verticalSpeed *= -1.02;
                 }
       
             }
