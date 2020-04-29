@@ -28,10 +28,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -130,8 +132,12 @@ public class Breakout extends Application {
 		Font scoreFont = Font.font("Comic Sans MS",FontWeight.BOLD,35);
 		
 		game = new GridPane();
+		game.setVgap(2);
+		game.setHgap(.5);
+		
+		//game.setGridLinesVisible(true);
 		game.setAlignment(Pos.CENTER);
-		game.setStyle("-fx-background-color: Black");
+	
 		
 		Text scoreTxt = new Text(200,200,"Score: ");
 		scoreTxt.setFont(scoreFont);
@@ -171,16 +177,16 @@ public class Breakout extends Application {
 		
 		for(int row =0; row < 5; row++)
 		{
-			blockStartX = 120;
-			blockStartY = 120 + (row * 50);
+			
 			for(int col =0; col < 8; col++)
 			{
-				blockStartX += col*200;
 				Blocks block1 = new Blocks(4-row);
 				blockArray[row][col] = block1;
 				game.getChildren().addAll(blockArray[row][col].getRectangle());
-				game.setRowIndex(blockArray[row][col].getRectangle(), blockStartX);
-				game.setColumnIndex(blockArray[row][col].getRectangle(), blockStartY);
+				game.getColumnConstraints().add(new ColumnConstraints(100));
+				game.getRowConstraints().add(new RowConstraints(50));
+				game.setRowIndex(blockArray[row][col].getRectangle(), row + 3);
+				game.setColumnIndex(blockArray[row][col].getRectangle(), col + 4);
 
 			}
 		}
