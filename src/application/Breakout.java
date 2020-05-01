@@ -3,9 +3,14 @@
  */
 package application;
 
+import java.io.File;
 import java.util.Random;
 
-
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -73,7 +78,7 @@ public class Breakout extends Application {
 	private Pane game;
 	private Blocks[][] blockArray;
 	private Bounds[][] blockBounds;
-	
+
 	private Circle ball1;
 	private Circle ball2;
 	private Circle ball3;
@@ -252,15 +257,7 @@ public class Breakout extends Application {
                         blockBounds[row][col] = blockArray[row][col].getRectangle().getBoundsInLocal();
                         atBlock = new Rectangle(ball.getLayoutX() - 20, ball.getLayoutY() - 20, 20, 20).intersects(blockBounds[row][col]);
                         if(atBlock)
-                        {
-                        	
-                        	if(ball.intersects(blockBounds[row][col]))
-                        	{
-                        		horizontalSpeed *= -1.02;
-                        		System.out.println("Block hit horizontally");
-                        	}
-                        	
-                        	
+                        {                        	
                         	blockArray[row][col].destroyBlock();
                         	verticalSpeed *= -1.02;
                         	if(blockArray[row][col].getBlockLevel() < 0)
@@ -314,7 +311,10 @@ public class Breakout extends Application {
                         			loop.stop();
                         			processEndOfGame();
                         		}
+                        		
                         	}
+                        	SoundCreator gameSound = new SoundCreator();
+                        	gameSound.playBlockBreakSound();
                             break;
                         }
                     }
@@ -349,10 +349,14 @@ public class Breakout extends Application {
                 if (atRightBorder || atLeftBorder) {
                     horizontalSpeed *= -1.02;
                     verticalSpeed *= 1.02;
+                    SoundCreator gameSound = new SoundCreator();
+                    gameSound.playBallBounceSound();
                 }
                 if (atTopBorder || atBar) {
                     verticalSpeed *= -1.02;
                     horizontalSpeed *= 1.02;
+                    SoundCreator gameSound = new SoundCreator();
+                    gameSound.playBallBounceSound();
                 }
                
       
@@ -476,6 +480,7 @@ public class Breakout extends Application {
 			}
 		}
 	}
+
 
 	/**
 	 * @param args
