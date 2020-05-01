@@ -10,6 +10,9 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
+import javax.sound.sampled.FloatControl;
+
+import javafx.animation.Timeline;
 
 
 /**
@@ -31,7 +34,7 @@ public class SoundCreator {
 		
 		this.blockBreakSound = new File("pop.wav");
 		this.ballBounceSound = new File("ballbounce.wav");
-		this.gamePlaySound = new File("Filename");
+		this.gamePlaySound = new File("gamebackground.wav");
 	}
 	
 	public void playBlockBreakSound()
@@ -81,7 +84,12 @@ public class SoundCreator {
 			DataLineInfo = new DataLine.Info(Clip.class, audioForm);
 			clip = (Clip) AudioSystem.getLine(DataLineInfo);
 			clip.open(audioInStream);
+			
+			FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+			gainControl.setValue(-10.0f);
+			
 			clip.start();
+			clip.loop(Timeline.INDEFINITE);
 		}
 		catch(Exception e)
 		{
