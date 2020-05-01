@@ -309,6 +309,11 @@ public class Breakout extends Application {
                         		scoreTxt.setFill(Color.WHITE);
                         		scoreTxt.relocate(150,90);
                         		game.getChildren().add(scoreTxt);
+                        		if(score == 1200)
+                        		{
+                        			loop.stop();
+                        			processEndOfGame();
+                        		}
                         	}
                             break;
                         }
