@@ -271,34 +271,44 @@ public class Breakout extends Application {
                         		if(row == 4)
                         		{
                         			tempScore *= ((row / 4) *10);
+                        			scoreTxt.setFill(Color.GREY);
                         			score += tempScore;
                         			System.out.println(score);
                         		}
                         		if(row == 3)
                         		{
                         			tempScore *= ((row / 3) *20);
+                        			scoreTxt.setFill(Color.GREY);
                         			score += tempScore;
                         			System.out.println(score);
                         		}
                         		if(row == 2)
                         		{
                         			tempScore *= ((row / 2) *30);
+                        			scoreTxt.setFill(Color.GREY);
                         			score += tempScore;
                         			System.out.println(score);
                         		}
                         		if(row == 1)
                         		{
                         			tempScore *= ((row) *40);
+                        			scoreTxt.setFill(Color.GREY);
                         			score += tempScore;
                         			System.out.println(score);
                         		}
                         		if(row == 0)
                         		{
-                        			tempScore *= ((row) +50);
+                        			tempScore *= ((row) +50); 
+                            		scoreTxt.setFill(Color.GREY);
                         			score += tempScore;
                         			System.out.println(score);
                         		}
-                        			
+                        		Font scoreFont = Font.font("Comic Sans MS",FontWeight.BOLD,35);
+                        		scoreTxt = new Text(0,0,"Score: " + score);
+                        		scoreTxt.setFont(scoreFont);
+                        		scoreTxt.setFill(Color.WHITE);
+                        		scoreTxt.relocate(150,90);
+                        		game.getChildren().add(scoreTxt);
                         	}
                             break;
                         }
