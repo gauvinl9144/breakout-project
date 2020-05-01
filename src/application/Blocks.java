@@ -11,8 +11,8 @@ public class Blocks {
 	{
 		this.block = new Rectangle();
 		this.block.setFill(Color.DARKRED);
-		this.block.setWidth(100);
-		this.block.setHeight(20);
+		this.block.setWidth(145);
+		this.block.setHeight(45);
 		this.blockLevel = 4;
 		this.block.setStroke(Color.ANTIQUEWHITE);
 		
@@ -24,41 +24,41 @@ public class Blocks {
 		{
 			this.block = new Rectangle();
 			this.block.setFill(Color.DARKRED);
-			this.block.setWidth(100);
-			this.block.setHeight(20);
-			this.blockLevel = 4;
+			this.block.setWidth(145);
+			this.block.setHeight(45);
+			this.blockLevel = inputLevel;
 		}
 		else if(inputLevel == 3)
 		{
 			this.block = new Rectangle();
 			this.block.setFill(Color.ORANGE);
-			this.block.setWidth(100);
-			this.block.setHeight(20);
-			this.blockLevel = 3;
+			this.block.setWidth(145);
+			this.block.setHeight(45);
+			this.blockLevel = inputLevel;
 		}
 		else if(inputLevel == 2)
 		{
 			this.block = new Rectangle();
 			this.block.setFill(Color.YELLOW);
-			this.block.setWidth(100);
-			this.block.setHeight(20);
-			this.blockLevel = 2;
+			this.block.setWidth(145);
+			this.block.setHeight(45);
+			this.blockLevel = inputLevel;
 		}
 		else if(inputLevel == 1)
 		{
 			this.block = new Rectangle();
 			this.block.setFill(Color.GREEN);
-			this.block.setWidth(100);
-			this.block.setHeight(20);
-			this.blockLevel = 1;
+			this.block.setWidth(145);
+			this.block.setHeight(45);
+			this.blockLevel = inputLevel;
 		}
 		else if(inputLevel == 0)
 		{
 			this.block = new Rectangle();
 			this.block.setFill(Color.BLUE);
-			this.block.setWidth(100);
-			this.block.setHeight(20);
-			this.blockLevel = 0;
+			this.block.setWidth(145);
+			this.block.setHeight(45);
+			this.blockLevel = inputLevel;
 		}
 		
 	}
@@ -68,29 +68,34 @@ public class Blocks {
 		if(this.blockLevel == 4)
 		{
 			this.block.setFill(Color.ORANGE);
+			
 		}
 		if(this.blockLevel == 3)
 		{
 			this.block.setFill(Color.YELLOW);
+
 		}
 		if(this.blockLevel == 2)
 		{
 			this.block.setFill(Color.GREEN);
+
 		}
 		if(this.blockLevel == 1)
 		{
 			this.block.setFill(Color.BLUE);
+
 		}
+
 		this.blockLevel -= 1;
-	}
-	protected int getBlockLevel()
-	{
-		return this.blockLevel;
 	}
 	
 	protected Rectangle getRectangle()
     {
         return this.block;
     }
+	protected int getBlockLevel()
+	{
+		return this.blockLevel;
+	}
 	
 }
