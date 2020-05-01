@@ -96,6 +96,9 @@ public class Breakout extends Application {
 	//Creates the Start screen and sets the scene
 	public void initializeStartScreen()
 	{
+		SoundCreator gameSound = new SoundCreator();
+		gameSound.playGamePlaySound();
+		
 		Font font = new Font("Comic Sans MS", 50);
 		Font font2 = new Font("Comic Sans MS", 20);
 		Text text = new Text("Breakout");
