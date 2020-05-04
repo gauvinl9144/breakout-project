@@ -49,7 +49,6 @@ public class SoundCreator {
 			clip = (Clip) AudioSystem.getLine(DataLineInfo);
 			clip.open(audioInStream);
 			clip.start();
-			System.out.println("pop");
 		}
 		catch(Exception e)
 		{
