@@ -16,8 +16,8 @@ import javafx.animation.Timeline;
 
 
 /**
- * @author RaffelNicholas
- *
+ * @author Nicholas Raffel
+ * Class that creates the sounds that play during game play
  */
 public class SoundCreator {
 
@@ -29,6 +29,10 @@ public class SoundCreator {
 	protected Clip clip;
 	protected DataLine.Info DataLineInfo;
 	
+	/**
+	 * @author Nicholas Raffel
+	 * Sound creation constructor creates the sounds the way they need to be 
+	 */
 	SoundCreator()
 	{
 		
@@ -37,9 +41,13 @@ public class SoundCreator {
 		this.gamePlaySound = new File("gamebackground.wav");
 	}
 	
+	/**
+	 * @author Nicholas Raffel
+	 * this method creates the way for the sound to played for when the blocks are destroyed
+	 */
 	public void playBlockBreakSound()
 	{
-		System.out.println("pop");
+		//This is the try statement for playing the sound for when the block breaks
 		try
 		{
 			this.blockBreakSound = new File("pop.wav");
@@ -57,8 +65,13 @@ public class SoundCreator {
 		
 	}
 	
+	/**
+	 * @author Nicholas Raffel
+	 * this method creates the way for the sound to played for when the blocks are destroyed
+	 */
 	public void playBallBounceSound()
 	{
+		//This is the try statement for playing the sound for when the ball bounces off a wall or the bar
 		try
 		{
 			audioInStream = AudioSystem.getAudioInputStream(ballBounceSound);
@@ -74,8 +87,13 @@ public class SoundCreator {
 		}
 	}
 	
+	/**
+	 * @author Nicholas Raffel
+	 * this method creates the way for the sound to played for when you're playing the game
+	 */
 	public void playGamePlaySound()
 	{
+		//This is the try statement for playing the game sound for when you're playing the game
 		try
 		{
 			audioInStream = AudioSystem.getAudioInputStream(gamePlaySound);
@@ -84,6 +102,7 @@ public class SoundCreator {
 			clip = (Clip) AudioSystem.getLine(DataLineInfo);
 			clip.open(audioInStream);
 			
+			//Lowers the max volume for the game sound that it isn't overwhelming
 			FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
 			gainControl.setValue(-10.0f);
 			

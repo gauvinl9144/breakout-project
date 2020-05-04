@@ -3,10 +3,20 @@ package application;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+/**
+ * 
+ * @author Luke Gauvin
+ * Creates the blocks and the block levels
+ */
 public class Blocks {
-	private Rectangle block;
-	private int blockLevel;
+	private Rectangle block;//Creates the block as a rectangle
+	private int blockLevel;//Creates the block level int
 	
+	/**
+	 * @author Luke Gauvin
+	 * Block Constructor
+	 * Creates the basic parameters of how to blocks look
+	 */
 	Blocks()
 	{
 		this.block = new Rectangle();
@@ -18,8 +28,13 @@ public class Blocks {
 		
 	}
 	
+	/**
+	 * @author Luke Gauvin
+	 * @param inputLevel this is the input for the block level as to which row they should be created on
+	 */
 	public Blocks(int inputLevel)
 	{
+		//Limits the block level so it can't be bigger or smaller than it's suppose to 
 		if(inputLevel > 4)
 		{
 			inputLevel = 4;
@@ -35,6 +50,7 @@ public class Blocks {
 		this.block.setHeight(45);
 		this.blockLevel = inputLevel;
 		
+		//This series of if statements changes the color of the block that correlates the the blocks level
 		if(inputLevel == 4)
 		{
 			this.block.setFill(Color.DARKRED);
@@ -61,9 +77,13 @@ public class Blocks {
 		}
 		
 	}
-	
+	/**
+	 * @author Luke Gauvin
+	 * Method that changes the level of the block if it is hit
+	 */
 	protected void destroyBlock()
 	{
+		//This series of if statements changes the color of the block that correlates the the blocks level
 		if(this.blockLevel == 4)
 		{
 			this.block.setFill(Color.ORANGE);
@@ -88,10 +108,18 @@ public class Blocks {
 		this.blockLevel -= 1;
 	}
 	
+	/**
+	 * @author Luke Gauvin
+	 * @return the block that is the rectangle
+	 */
 	protected Rectangle getRectangle()
     {
         return this.block;
     }
+	/**
+	 * @author Luke Gauvin
+	 * @return the level at which the block resides
+	 */
 	protected int getBlockLevel()
 	{
 		return this.blockLevel;
