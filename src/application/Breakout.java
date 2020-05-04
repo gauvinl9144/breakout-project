@@ -2,16 +2,6 @@
  * 
  */
 package application;
-
-import java.io.File;
-import java.util.Random;
-
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.DataLine;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -21,7 +11,6 @@ import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
 import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
@@ -32,14 +21,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -54,6 +38,7 @@ import javafx.util.Duration;
 /**
  * @author Nicholas Raffel
  * @author Luke Gauvin
+ * @version 5/4/2020
  */
 public class Breakout extends Application {
 
@@ -64,8 +49,6 @@ public class Breakout extends Application {
 	private Scene endGameScene;
 	private int score;
 	private int ballCount;
-	private int blockCount;
-	private BorderPane fullGame;
 	private Group gamePane;
 	
 	private double horizontalSpeed;
@@ -466,7 +449,7 @@ public class Breakout extends Application {
 		root.setAlignment(Pos.CENTER);
 		root.setStyle("-fx-background-color: Blue");
 		
-		Scene endGameScene = new Scene(root, 500, 500, Color.BLUE);
+		endGameScene = new Scene(root, 500, 500, Color.BLUE);
 		
 		window.setScene(endGameScene);
 
