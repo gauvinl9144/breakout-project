@@ -20,45 +20,44 @@ public class Blocks {
 	
 	public Blocks(int inputLevel)
 	{
+		if(inputLevel > 4)
+		{
+			inputLevel = 4;
+		}
+		
+		else if(inputLevel < 0)
+		{
+			inputLevel = 0;
+		}
+		
+		this.block = new Rectangle();
+		this.block.setWidth(145);
+		this.block.setHeight(45);
+		this.blockLevel = inputLevel;
+		
 		if(inputLevel == 4)
 		{
-			this.block = new Rectangle();
 			this.block.setFill(Color.DARKRED);
-			this.block.setWidth(145);
-			this.block.setHeight(45);
-			this.blockLevel = inputLevel;
 		}
+		
 		else if(inputLevel == 3)
 		{
-			this.block = new Rectangle();
 			this.block.setFill(Color.ORANGE);
-			this.block.setWidth(145);
-			this.block.setHeight(45);
-			this.blockLevel = inputLevel;
 		}
+		
 		else if(inputLevel == 2)
 		{
-			this.block = new Rectangle();
 			this.block.setFill(Color.YELLOW);
-			this.block.setWidth(145);
-			this.block.setHeight(45);
-			this.blockLevel = inputLevel;
 		}
+		
 		else if(inputLevel == 1)
 		{
-			this.block = new Rectangle();
 			this.block.setFill(Color.GREEN);
-			this.block.setWidth(145);
-			this.block.setHeight(45);
-			this.blockLevel = inputLevel;
 		}
+		
 		else if(inputLevel == 0)
 		{
-			this.block = new Rectangle();
 			this.block.setFill(Color.BLUE);
-			this.block.setWidth(145);
-			this.block.setHeight(45);
-			this.blockLevel = inputLevel;
 		}
 		
 	}
