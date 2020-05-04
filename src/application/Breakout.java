@@ -42,16 +42,18 @@ import javafx.util.Duration;
  */
 public class Breakout extends Application {
 
-	private Stage window;
+	private Stage window; //Main window
 	
-	private Scene startScene;
-	private Scene inGameScene;
-	private Scene endGameScene;
-	private int score;
-	private int ballCount;
-	private Group gamePane;
+
+	private Scene startScene;//Start screen for the Start button
+	private Scene inGameScene;// Scene for when you're playing the game
+	private Scene endGameScene;//Final Scene 
+	private int score;//Score
+	private int ballCount;// Counter for your remaining balls
+	private Group gamePane;//Pane for our fame
+
 	
-	private double horizontalSpeed;
+	private double horizontalSpeed;//Horizontal Speed of the bal
 	private double verticalSpeed;
 	
 	private Circle ball;
@@ -77,11 +79,17 @@ public class Breakout extends Application {
 	}
 	
 	//Creates the Start screen and sets the scene
+	/**
+	 * @author Nicholas Raffel
+	 * @return Creates the start scene  
+	 */
 	public void initializeStartScreen()
 	{
+		//SoundCreator to call to the sounds and play them
 		SoundCreator gameSound = new SoundCreator();
 		gameSound.playGamePlaySound();
 		
+		//Sets fonts and texts
 		Font font = new Font("Comic Sans MS", 50);
 		Font font2 = new Font("Comic Sans MS", 20);
 		Text text = new Text("Breakout");
@@ -91,6 +99,7 @@ public class Breakout extends Application {
 		text2.setFont(font2);
 		text2.setFill(Color.BLACK);
 		
+		//Start Button creation
 		Button start = new Button("Start");
 		start.setFont(font);
 		start.setPrefWidth(250);
@@ -98,17 +107,22 @@ public class Breakout extends Application {
 		start.setTooltip(new Tooltip("Starts the game!"));
 		start.setOnAction(this::processStartRetry);
 		
+		//VBox to actually have all things shown
 		VBox startPane = new VBox(text, text2, start);
 		startPane.setAlignment(Pos.CENTER);
 		startPane.setSpacing(50);
 		startPane.setStyle("-fx-background-color: Red");
 		
+		//Puts everything into the scene and sets the title 
 		startScene = new Scene(startPane, 500,500, Color.BLUE);
 		window.setScene(startScene);
 		window.setTitle("Breakout!");
 	}
 	
-	//Will add more sooner or later
+	/**
+	 * @author Nicholas Raffel & Luke Gauvin
+	 * @param e, the name of the event that starts the start or the retry of playing the game
+	 */
 	public void processStartRetry(Event e)
 	{
 		initializeInGameScene();
@@ -122,6 +136,10 @@ public class Breakout extends Application {
 	}
 	
 	//Creates the game screen
+	/**
+	 * @author Nicholas Raffel
+	 * @return Creates the in game scene, boundaries, blocks and calls to other methods to create the bar, and ball.
+	 */
 	public void initializeInGameScene()
 	{
 		score = 0;
@@ -130,7 +148,7 @@ public class Breakout extends Application {
 		Font scoreFont = Font.font("Comic Sans MS",FontWeight.BOLD,35);
 		
 		game = new Pane();
-
+		//Creates the score 
 		scoreTxt = new Text(200,200,"Score: " + score);
 		scoreTxt.setFont(scoreFont);
 		scoreTxt.setFill(Color.WHITE);
@@ -138,6 +156,7 @@ public class Breakout extends Application {
 		ballCnt.setFont(scoreFont);
 		ballCnt.setFill(Color.WHITE);
 		
+		//Top bar graphic
 		StackPane topPane = new StackPane();
 		topPane.setStyle("-fx-background-color: Grey");
 		topPane.setPadding(new Insets(0,1650,100,0));
@@ -148,11 +167,13 @@ public class Breakout extends Application {
 		ballCnt.setTranslateY(90);
 		VBox top = new VBox(topPane);
 		
+		//Left bar graphic
 		FlowPane leftPane = new FlowPane();
 		leftPane.setStyle("-fx-background-color: Grey");
 		leftPane.setPadding(new Insets(0,-250,950,0));
 		VBox left = new VBox(leftPane);
 		
+		//Right bar graphic
 		FlowPane rightPane = new FlowPane();
 		rightPane.setStyle("-fx-background-color: Grey");
 		rightPane.setPadding(new Insets(0,-250,950,0));
@@ -165,7 +186,6 @@ public class Breakout extends Application {
 		initializeBall();
 		
 		//Creates the blocks
-		
 		blockArray = new Blocks[5][8];
 		blockBounds = new Bounds[5][8];
 		double blockStartX = 60;
@@ -364,8 +384,8 @@ public class Breakout extends Application {
 	}
 	/**
 	 * @author RaffelNicholas
-	 * Bar Movement Function,
-	 * @param e
+	 * Bar Movement Function
+	 * @param e name of the Key Event that allows the bar to be moved
 	 */
 	public void processBarMovement(KeyEvent e)
 	{
