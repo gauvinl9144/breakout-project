@@ -439,6 +439,7 @@ public class Breakout extends Application {
 		retryTrue.setFont(comicSans);
 		retryTrue.setOnAction(this::processStartRetry);
 		retryTrue.setTooltip(new Tooltip("Starts the game again!"));
+		
 		retryFalse = new Button("No");
 		retryFalse.setTextFill(Color.BLACK);
 		retryFalse.setFont(comicSans);
@@ -482,7 +483,7 @@ public class Breakout extends Application {
 			try {
 				((Stage)(((Button)e.getSource()).getScene().getWindow())).close();
 			} catch (Exception e1) {
-				System.out.println("Ohno");
+				System.out.println("Exception caught");
 			}
 		}
 	}
