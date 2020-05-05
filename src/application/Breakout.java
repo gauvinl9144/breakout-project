@@ -119,7 +119,7 @@ public class Breakout extends Application {
 	}
 	
 	/**
-	 * @author Nicholas Raffel & Luke Gauvin
+	 * @author Nicholas Raffel and Luke Gauvin
 	 * @param e, the name of the event that starts the start or the retry of playing the game
 	 * This method is the start and retry of the game, it is called to reset the game screen 
 	 */
@@ -241,8 +241,8 @@ public class Breakout extends Application {
 	}
 	
 	/**
-	 * @author Luke Gauvin (Did most of the harder work) & Nicholas Raffel
-	 * @return A TimeLine loop for the animation for the ball to be able to move
+	 * @author Luke Gauvin (Did most of the harder work) and Nicholas Raffel
+	 * A TimeLine loop for the animation for the ball to be able to move
 	 * The for loop is the creation of the block bounds and and determines if the ball
 	 * has hit the bar in order for the blocks to be "destroyed"
 	 * all of the if statements inside of the for loops create the score and add onto the score
